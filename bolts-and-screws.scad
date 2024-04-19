@@ -3,7 +3,7 @@ $fn=15;
 // 8-32 x 2in machine screw
 // Phillips oval head
 module 8_32_2_machine_screw() {
-  shaftDiameter = 4.08;
+  shaftDiameter = 4.93;
   screwLength = 50;
   headLength = 4;
   headWidth = 7.89;
