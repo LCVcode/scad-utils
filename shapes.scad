@@ -18,8 +18,9 @@ module roundedRect(width, height, radius) {
     copyMirrorPointsX(
     copyMirrorPointsY(
     translatePoints(
+      [width/2-radius, height/2-radius],
       scalePoints(
-        arc(angle=90, res=3), radius),
-      [width/2-radius, height/2-radius])
+        radius,
+        arc(angle=90, res=3)))
   )));
 }

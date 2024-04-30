@@ -1,19 +1,19 @@
 use <list.scad>;
 
 // Translate a list of 2D points
-function translatePoints(points, transform) = [
+function translatePoints(transform, points) = [
   for (point = points)
     [point[0] + transform[0], point[1] + transform[1]]
 ];
 
 // Scales a list of 2D points by some value relative to the origin
-function scalePoints(points, factor) = [
+function scalePoints(factor, points) = [
   for (point = points)
     [point[0] * factor, point[1] * factor]
 ];
 
 // Rotate a list of 2D points by some angle around the origin
-function rotatePoints(points, angle) = [
+function rotatePoints(angle, points) = [
     for (point = points)
         let (x = point[0], y = point[1])
             [x * cos(angle) - y * sin(angle), x * sin(angle) + y * cos(angle)]
