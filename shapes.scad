@@ -24,3 +24,15 @@ module roundedRect(width, height, radius) {
         arc(angle=90, res=3)))
   )));
 }
+
+// A standard ellipse
+module ellipse(semi_major, semi_minor, n=30) {
+  a = max(semi_major, semi_minor);
+  b = min(semi_major, semi_minor);
+  
+  assert (b > 0);
+  
+  d_theta = 360 / n;
+  
+  polygon([for (theta = [d_theta:d_theta:360]) let (x=(a*b)/sqrt((b*b + a*a*tan(theta)*tan(theta))), y=tan(theta) * x, sig=((theta > 90) && (theta <= 270)) ? -1 : 1) (x == 0) ? [0, sig*b] : [sig*x, sig*y]]);
+}
