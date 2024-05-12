@@ -1,26 +1,35 @@
 use <list.scad>;
 
-// Translate a list of 2D points
-function translate_points(transform, points) = [
-  for (point = points)
-    [point[0] + transform[0], point[1] + transform[1]]
+// Translate a 2D point
+function translate_point(translation, point) = [
+  point[0] + translation[0],
+  point[1] + translation[1]
 ];
 
-// Scales a list of 2D points by some value relative to the origin
-function scale_points(factor, points) = [
-  for (point = points)
-    [point[0] * factor, point[1] * factor]
-];
+// Translate a list of 2D points
+function translate_points(translation, points) = [for (point = points) translate_point(translation, point)];
+  
+// Rotate a 2D point about the origin
+function rotate_point(angle, point) = [point[0]*cos(angle) - point[1]*sin(angle), point[0]*sin(angle) + point[1]*cos(angle)];
 
 // Rotate a list of 2D points by some angle around the origin
-function rotate_points(angle, points) = [
-    for (point = points)
-        let (x = point[0], y = point[1])
-            [x * cos(angle) - y * sin(angle), x * sin(angle) + y * cos(angle)]
+function rotate_points(angle, points) = [for (point = points) rotate_point(angle, point)];
+  
+// Scale the distance between a 2D point and the origin
+function scale_point(factor, point) = [point[0] * factor, point[1] * factor];
+
+// Scales a list of 2D points by some value relative to the origin
+function scale_points(factor, points) = [for (point = points) scale_point(factor, point)];
+
+// Transformation of a list of 2D points, including scaling, rotation, and translation
+function transform_2D(scale_factor = 1, rotation = 0, translation = [0, 0], points) = [
+  for (point = points)
+    translate_point(translation, rotate_point(rotation, scale_point(scale_factor, point)))
 ];
 
+
 // Generates points approximating an arc over a given angle
-function arc(angle, res=1) = let(step=res*(angle)/ceil(angle)) [
+function arc(angle, res=5) = let(step=res*(angle)/ceil(angle)) [
   for (a = [0:step:angle]) [cos(a), sin(a)]
 ];
 
