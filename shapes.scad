@@ -12,7 +12,7 @@ module hexagon(height) {
 }
 
 // A 2D sketch of a rounded rectangle
-module roundedRect(width, height, radius) {
+module rounded_rect(width, height, radius) {
   radius = min(radius, min(width, height) / 2);
   polygon(
     copyMirrorPointsX(

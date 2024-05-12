@@ -19,4 +19,3 @@ module 8_32_2_machine_screw() {
   ]);
   }
 }
-8_32_2_machine_screw();
