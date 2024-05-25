@@ -27,7 +27,6 @@ function transform_2D(scale_factor = 1, rotation = 0, translation = [0, 0], poin
     translate_point(translation, rotate_point(rotation, scale_point(scale_factor, point)))
 ];
 
-
 // Generates points approximating an arc over a given angle
 function arc(angle, res=5) = let(step=res*(angle)/ceil(angle)) [
   for (a = [0:step:angle]) [cos(a), sin(a)]
@@ -46,3 +45,23 @@ function mirror_over_y(points) = [for (point = points) [-point[0], point[1]]];
 // Copy and mirror a list of 2D points over the Y axis
 function copy_mirror_points_y(points) =
     concat(points, reverse(mirrorOverY(points)));
+
+// Shift a list of 2D points to ensure a specific maximum Y-coordinate
+function force_top(top, points) = let(max_y = max([for (p = points) p[1]])) [
+    for (point = points) [point[0], point[1] - (max_y - top)]
+];
+
+// Shift a list of 2D points to ensure a specific minimum Y-coordinate
+function force_bottom(bottom, points) = let(min_y = min([for (p = points) p[1]])) [
+    for (point = points) [point[0], point[1] + (bottom - min_y)]
+];
+
+// Shift a list of 2D points to ensure a specific minimum X-coordinate
+function force_left(left, points) = let(min_x = min([for (p = points) p[0]])) [
+    for (point = points) [point[0] + (left - min_x), point[1]]
+];
+
+// Shift a list of 2D points to ensure a specific maximum X-coordinate
+function force_right(right, points) = let(max_x = max([for (p = points) p[0]])) [
+    for (point = points) [point[0] - (max_x - right), point[1]]
+];
