@@ -94,25 +94,3 @@ module round_poly(points) {
   points3 = round_all_corners(points2);
   polygon(flatten(points3));
 }
-
-/*
-points = [
-  [0, 0, 0.5],
-  [0, 1, 0.25],
-  [3, 1, 1],
-  [1, 5.5, 5],
-  [3, 10, 1], 
-  [0, 10, 0.25],
-  [0, 11, 0.5],
-  [10, 11, 0.5],
-  [10, 10, 0.25],
-  [7, 10, 1],
-  [7, 1, 1],
-  [10, 1, 0.25],
-  [10, 0, 0.5],
-];
-
-%polygon([for (p=points) [p[0], p[1]]]);
-
-round_poly(points);
-*/
