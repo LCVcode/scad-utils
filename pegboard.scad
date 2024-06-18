@@ -132,4 +132,18 @@ module large_level_holder() {
   ]);
   }
 }
-large_level_holder();
+// large_level_holder();
+
+module small_level_holder() {
+  hole_diameter = inches(0.389);
+  hanger_backing(width=2);
+  level_thickness = inches(0.72);
+  
+  translate([0, 0, -hole_diameter/2]) {
+    rotate([90, 0, 0])
+    cylinder(level_thickness, d=hole_diameter * 0.75);
+    translate([0, -level_thickness, 0])
+    sphere(d=hole_diameter * 0.9);
+  }
+}
+small_level_holder();
