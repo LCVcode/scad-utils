@@ -88,9 +88,9 @@ function round_all_corners(points, angular_res=5) = (
  * @param points List of three or more points formatted as (x, y, r).
  * @return Polygon with rounded corners.
  */
-module round_poly(points) {
+module round_poly(points, resolution=5) {
   points2 = amend_point_list(points);
   assert(validate_poly_path(points2));
-  points3 = round_all_corners(points2);
+  points3 = round_all_corners(points2, angular_res=resolution);
   polygon(flatten(points3));
 }
