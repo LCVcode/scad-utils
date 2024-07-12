@@ -2,7 +2,7 @@ use <scale.scad>
 use <round-poly.scad>
 use <modifiers.scad>
 
-$fn=36;
+$fn = $preview ? 16 : 64;
 
 PEG_DIAMETER = inches(0.228);
 SPACING = inches(1);
@@ -55,13 +55,13 @@ module hanger_backing(width, height=2) {
       [x, 0, PEG_RADIUS],
       [x, y, PEG_RADIUS],
       [0, y, PEG_RADIUS]
-    ]);
+    ], resolution=$preview ? 30 : 3);
     round_poly([
       [    2*PEG_DIAMETER,     2*PEG_DIAMETER, PEG_RADIUS],
       [x - 2*PEG_DIAMETER,     2*PEG_DIAMETER, PEG_RADIUS],
       [x - 2*PEG_DIAMETER, y - 2*PEG_DIAMETER, PEG_RADIUS],
       [    2*PEG_DIAMETER, y - 2*PEG_DIAMETER, PEG_RADIUS]
-    ]);
+    ], resolution=$preview ? 30 : 3);
   }}
 }
 
@@ -146,4 +146,52 @@ module small_level_holder() {
     sphere(d=hole_diameter * 0.9);
   }
 }
-small_level_holder();
+// small_level_holder();
+
+module large_measuring_tape_holder_profile(handle_width, holder_thickness, handle_thickness) {
+
+  tolerance = 1;
+
+  copy_mirror_x()
+  round_poly([
+    [0, holder_thickness, 0],
+    [handle_width/2 + tolerance, holder_thickness, handle_thickness/4],
+    [handle_width/2 + tolerance, holder_thickness + handle_thickness/2, holder_thickness/2 - tolerance],
+    [handle_width/2 + tolerance + holder_thickness, holder_thickness + handle_thickness/2, holder_thickness/2 - tolerance],
+    [handle_width/2 + tolerance + holder_thickness, 0, holder_thickness/2],
+    [0, 0, 0],
+  ], resolution=$preview ? 30 : 3);
+}
+
+module large_measuring_tape_holder() {
+  // Parameters
+  holder_thickness = 10;
+  holder_width = inches(4);
+  handle_thickness = 34.7;
+  handle_width = 32.5;
+
+  hanger_backing(width=3);
+
+  translate([0, -handle_width/2 - handle_thickness/8, -handle_thickness/2 - holder_thickness]) {
+  rotate([90, 0, 90])
+  linear_extrude(holder_width - 2*(holder_thickness + handle_thickness/2), center=true)
+  large_measuring_tape_holder_profile(handle_width, holder_thickness, handle_thickness);
+
+  copy_mirror_x()
+  translate([-holder_width/2 + holder_thickness + handle_thickness/2, 0, 0]) rotate([-90, 0, 0]) 
+  rotate_extrude(angle=90) rotate([0, 0, 90])
+  large_measuring_tape_holder_profile(handle_width, holder_thickness, handle_thickness);
+  }
+}
+// large_measuring_tape_holder();
+
+module convenience_cup() {
+  tolerance = 1;
+
+  // Parameters
+  width = inches(2) - 2*tolerance;
+  height = inches(2) - 2*tolerance;
+
+  hanger_backing(width=2);
+}
+convenience_cup();
