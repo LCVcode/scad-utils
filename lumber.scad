@@ -18,8 +18,8 @@ module lumber(width, height, length, radius, center=true) {
     [ x, -y, radius],
     [ x,  y, radius],
     [-x,  y, radius],
-  ]
-  );
+  ],
+  resolution = $preview ? 30 : 5);
 };
 
 module dimensional_lumber(width, height, length, center=true) {
