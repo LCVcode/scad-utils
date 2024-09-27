@@ -185,13 +185,44 @@ module large_measuring_tape_holder() {
 }
 // large_measuring_tape_holder();
 
-module convenience_cup() {
-  tolerance = 1;
-
+module key_hanger() {
   // Parameters
-  width = inches(2) - 2*tolerance;
-  height = inches(2) - 2*tolerance;
+  hook_curvature = 2.5;
+  support_height = inches(0.9);
+  hook_tip_length = inches(0.5);
+  hook_scale = 0.8;
 
-  hanger_backing(width=2);
+  d = PEG_DIAMETER * hook_scale;
+
+  difference() {
+  union() {
+  // Pegboard hook
+  hook(); 
+
+  // Right turn connected to pegboard hook
+  translate([0, 0, -PEG_DIAMETER/2]) rotate([90, 0, -90])
+  rotate_extrude(angle=90) translate([PEG_DIAMETER/2, 0, 0]) circle(d=PEG_DIAMETER);
+
+  // Vertial support
+  translate([0, -PEG_DIAMETER/2, -PEG_DIAMETER/2]) rotate([180, 0, 0])
+  linear_extrude(support_height, scale=hook_scale) circle(d=PEG_DIAMETER);
+
+  // Hook curve
+  translate([0, -hook_curvature - (1 + hook_scale) * PEG_DIAMETER/2, -PEG_DIAMETER/2 - support_height]) 
+  rotate([-90, 0, 90]) rotate_extrude(angle=180) translate([d/2 + hook_curvature, 0, 0])
+  circle(d=d);
+
+  // Hook tip
+  translate([0, -PEG_DIAMETER/2 - 2*hook_curvature - d, -support_height - PEG_DIAMETER/2])
+  linear_extrude(hook_tip_length) circle(d=d);
+  translate([0, -PEG_DIAMETER/2 - 2*hook_curvature - d, -support_height - PEG_DIAMETER/2 + hook_tip_length]) sphere(d=d);
+  }
+
+  // flat face cutouts
+  separation = d*3/4;
+
+  copy_mirror_x() translate([separation/2, 0, 0])
+  linear_extrude(feet(1), center=true) translate([0, -inches(1.5), 0]) square([inches(1), inches(3)]);
+  }
 }
-convenience_cup();
+key_hanger();
