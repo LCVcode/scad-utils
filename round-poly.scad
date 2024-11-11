@@ -41,11 +41,13 @@ function amend_point_list(points) = (
  * @return Boolean value indicating whether the list of points is valid.
  */
 function validate_poly_path(points, index=0) = 
-  let(A=points[index], B=points[(index+1)%len(points)], dist=norm_2D(B-A))
-  index == len(points) ? true : (
-    points[index][2] < 0 ? false : (
-    dist <= A[3] + B[3] ? false : validate_poly_path(points, index+1)
-  ));
+    let(A = points[index],
+        B = points[(index+1) % len(points)],
+        dist = is_undef(A) || is_undef(B) ? 0 : norm_2D(B - A))
+    index == len(points) ? true : (
+        is_undef(A) || is_undef(B) || points[index][2] < 0 ? false : (
+        dist <= (A[3] + B[3]) ? false : validate_poly_path(points, index + 1)
+    ));
 
 
 function round_single_corner(ABC, angular_res=5) = (

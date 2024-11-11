@@ -8,7 +8,9 @@ function normalize_angle(angle) =
 
 function dot_2D(v1, v2) = v1[0]*v2[0] + v1[1]*v2[1];
 
-function norm_2D(vec) = sqrt(vec[0]*vec[0] + vec[1]*vec[1]);
+function norm_2D(vec) = is_undef(vec[0]) || is_undef(vec[1]) 
+    ? undef
+    : sqrt(vec[0]*vec[0] + vec[1]*vec[1]);
 
 function unit_2D(vec) = let(dist=norm_2D(vec)) dist==0 ? [0, 0] : vec/dist;
 
