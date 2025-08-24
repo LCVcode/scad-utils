@@ -1,4 +1,7 @@
 use <list.scad>;
+/*
+This module contains many functions to manipulate 2D points or lists of 2D points
+*/
 
 // Translate a 2D point
 function translate_point(translation, point) = [

@@ -92,7 +92,6 @@ function round_all_corners(points, angular_res=5) = (
  */
 module round_poly(points, resolution=$preview ? 30 : 3) {
   points2 = amend_point_list(points);
-  echo(points2);
   assert(validate_poly_path(points2));
   points3 = round_all_corners(points2, angular_res=resolution);
   polygon(flatten(points3));
